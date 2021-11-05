@@ -5,6 +5,7 @@ import 'package:notes_flutter/widgets/rounded_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
+  static const String id = 'register_screen';
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
