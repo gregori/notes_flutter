@@ -1,5 +1,6 @@
 // Tela com a listView com a lista de notas
 import 'package:flutter/material.dart';
+import 'package:notes_flutter/screens/add_notes_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -61,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          print('Nova nota');
+          Navigator.pushNamed(context, AddNotesScreen.id);
         },
         child: const Icon(Icons.add),
       ),
