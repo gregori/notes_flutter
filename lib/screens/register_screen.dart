@@ -1,6 +1,7 @@
 // Tela com o formulário de registro
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/constants.dart';
+import 'package:notes_flutter/screens/main_screen.dart';
 import 'package:notes_flutter/widgets/rounded_button.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             RoundedButton(
               title: 'Registrar-se',
               onPressed: () {
-                print('Registro efetuado!');
+                Navigator.pushNamed(context, MainScreen.id);
               },
               color: Colors.green,
             ),

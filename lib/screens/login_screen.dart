@@ -1,6 +1,7 @@
 // Tela com o formulário de login
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/constants.dart';
+import 'package:notes_flutter/screens/main_screen.dart';
 import 'package:notes_flutter/widgets/rounded_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedButton(
               title: 'Login',
               onPressed: () {
-                print('Login efetuado!');
+                Navigator.pushNamed(context, MainScreen.id);
               },
               color: Colors.blueAccent,
             ),

@@ -1,5 +1,7 @@
 // Tela com os botões login e registrar
 import 'package:flutter/material.dart';
+import 'package:notes_flutter/screens/login_screen.dart';
+import 'package:notes_flutter/screens/register_screen.dart';
 import 'package:notes_flutter/widgets/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -34,14 +36,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               color: Colors.blueAccent,
               title: 'Login',
               onPressed: () {
-                print('Login');
+                Navigator.pushNamed(context, LoginScreen.id);
               },
             ),
             RoundedButton(
               color: Colors.green,
               title: 'Registrar-se',
               onPressed: () {
-                print('Registrar-se');
+                Navigator.pushNamed(context, RegisterScreen.id);
               },
             ),
           ],
