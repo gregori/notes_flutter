@@ -1,6 +1,7 @@
 // Tela com a listView com a lista de notas
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/screens/add_notes_screen.dart';
+import 'package:notes_flutter/screens/edit_notes_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -32,6 +33,9 @@ class _MainScreenState extends State<MainScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, EditNotesScreen.id);
+                      },
                       title: const Text('Nota 1'),
                       subtitle: const Text('Esta é a nota 1'),
                       tileColor: Colors.red[100],
@@ -40,6 +44,9 @@ class _MainScreenState extends State<MainScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, EditNotesScreen.id);
+                      },
                       title: const Text('Nota 2'),
                       subtitle: const Text('Esta é a nota 2'),
                       tileColor: Colors.red[100],
@@ -48,6 +55,9 @@ class _MainScreenState extends State<MainScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, EditNotesScreen.id);
+                      },
                       title: const Text('Nota 3'),
                       subtitle: const Text('Esta é a nota 3'),
                       tileColor: Colors.red[100],

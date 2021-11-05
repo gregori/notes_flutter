@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/screens/add_notes_screen.dart';
+import 'package:notes_flutter/screens/edit_notes_screen.dart';
 import 'package:notes_flutter/screens/login_screen.dart';
 import 'package:notes_flutter/screens/main_screen.dart';
 import 'package:notes_flutter/screens/register_screen.dart';
@@ -23,6 +24,7 @@ class NotesApp extends StatelessWidget {
         RegisterScreen.id: (context) => const RegisterScreen(),
         MainScreen.id: (context) => const MainScreen(),
         AddNotesScreen.id: (context) => const AddNotesScreen(),
+        EditNotesScreen.id: (context) => const EditNotesScreen(),
       },
     );
   }
