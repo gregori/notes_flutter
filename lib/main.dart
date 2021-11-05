@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_flutter/screens/login_screen.dart';
+import 'package:notes_flutter/screens/main_screen.dart';
 
 void main() {
   runApp(const NotesApp());
@@ -12,7 +12,7 @@ class NotesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginScreen(),
+      home: MainScreen(),
     );
   }
 }
