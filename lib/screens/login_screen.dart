@@ -1,4 +1,5 @@
 // Tela com o formulário de login
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/constants.dart';
 import 'package:notes_flutter/screens/main_screen.dart';
@@ -14,6 +15,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late String email;
+  late String password;
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   kTextFieldDecoration.copyWith(hintText: 'Entre seu email'),
               textAlign: TextAlign.center,
               keyboardType: TextInputType.emailAddress,
+              onChanged: (value) {
+                email = value;
+              },
             ),
             const SizedBox(
               height: 8.0,
@@ -46,13 +54,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   kTextFieldDecoration.copyWith(hintText: 'Entre sua senha'),
               textAlign: TextAlign.center,
               obscureText: true,
+              onChanged: (value) {
+                password = value;
+              },
             ),
             const SizedBox(
               height: 24.0,
             ),
             RoundedButton(
               title: 'Login',
-              onPressed: () {
+              onPressed: () async {
+                await _auth.signInWithEmailAndPassword(
+                    email: email, password: password);
                 Navigator.pushNamed(context, MainScreen.id);
               },
               color: Colors.blueAccent,
