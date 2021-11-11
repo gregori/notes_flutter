@@ -1,4 +1,5 @@
 // Tela com a listView com a lista de notas
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/screens/add_notes_screen.dart';
 import 'package:notes_flutter/screens/edit_notes_screen.dart';
@@ -12,6 +13,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    print(_auth.currentUser);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
