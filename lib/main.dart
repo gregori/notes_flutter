@@ -11,17 +11,30 @@ void main() {
   runApp(const NotesApp());
 }
 
-class NotesApp extends StatelessWidget {
+class NotesApp extends StatefulWidget {
   const NotesApp({Key? key}) : super(key: key);
+
+  @override
+  State<NotesApp> createState() => _NotesAppState();
+}
+
+class _NotesAppState extends State<NotesApp> {
+  late Future<FirebaseApp> _firebaseInit;
 
   Future<FirebaseApp> _initializeFirebase() async {
     return await Firebase.initializeApp();
   }
 
   @override
+  void initState() {
+    _firebaseInit = _initializeFirebase();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _initializeFirebase(),
+      future: _firebaseInit,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(

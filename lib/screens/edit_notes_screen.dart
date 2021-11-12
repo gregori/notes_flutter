@@ -2,9 +2,22 @@
 // Tela para adicionar nova nota
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/constants.dart';
+import 'package:notes_flutter/notes_service.dart';
 import 'package:notes_flutter/widgets/rounded_button.dart';
 
 import 'main_screen.dart';
+
+class EditNotesScreenArguments {
+  final String title;
+  final String description;
+  final String noteId;
+
+  EditNotesScreenArguments({
+    required this.title,
+    required this.description,
+    required this.noteId,
+  });
+}
 
 class EditNotesScreen extends StatefulWidget {
   const EditNotesScreen({Key? key}) : super(key: key);
@@ -16,8 +29,16 @@ class EditNotesScreen extends StatefulWidget {
 }
 
 class _EditNotesScreenState extends State<EditNotesScreen> {
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EditNotesScreenArguments;
+    _titleController = TextEditingController(text: args.title);
+    _descriptionController = TextEditingController(text: args.description);
+
     return Scaffold(
       appBar: AppBar(
         leading: null,
@@ -36,18 +57,20 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
             TextField(
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Título da nota'),
+              controller: _titleController,
             ),
             const SizedBox(
               height: 8.0,
             ),
-            const Expanded(
+            Expanded(
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Descrição da nota',
                 ),
+                controller: _descriptionController,
               ),
             ),
             const SizedBox(
@@ -56,6 +79,11 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
             RoundedButton(
               title: 'Editar Nota',
               onPressed: () {
+                NotesService.updateNote(
+                  title: _titleController.text,
+                  description: _descriptionController.text,
+                  id: args.noteId,
+                );
                 Navigator.pushNamed(context, MainScreen.id);
               },
               color: Colors.red,

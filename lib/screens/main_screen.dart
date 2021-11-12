@@ -1,6 +1,8 @@
 // Tela com a listView com a lista de notas
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_flutter/notes_service.dart';
 import 'package:notes_flutter/screens/add_notes_screen.dart';
 import 'package:notes_flutter/screens/edit_notes_screen.dart';
 
@@ -18,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    print(_auth.currentUser);
+    // print(_auth.currentUser);
   }
 
   @override
@@ -34,47 +36,37 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0, vertical: 20.0),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.pushNamed(context, EditNotesScreen.id);
-                      },
-                      title: const Text('Nota 1'),
-                      subtitle: const Text('Esta é a nota 1'),
-                      tileColor: Colors.red[100],
+            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: NotesService.getNotes(),
+                builder: (context, snapshot) {
+                  List<NoteTile> noteList = [];
+
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  final notes = snapshot.data!.docs;
+                  for (var note in notes) {
+                    final String title = note.data()['title'];
+                    final String subtitle = note.data()['description'];
+                    final String id = note.id;
+                    noteList.add(NoteTile(
+                      title: title,
+                      subtitle: subtitle,
+                      id: id,
+                    ));
+                  }
+
+                  return Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 20.0),
+                      children: noteList,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.pushNamed(context, EditNotesScreen.id);
-                      },
-                      title: const Text('Nota 2'),
-                      subtitle: const Text('Esta é a nota 2'),
-                      tileColor: Colors.red[100],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.pushNamed(context, EditNotesScreen.id);
-                      },
-                      title: const Text('Nota 3'),
-                      subtitle: const Text('Esta é a nota 3'),
-                      tileColor: Colors.red[100],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                  );
+                }),
           ],
         ),
       ),
@@ -84,6 +76,47 @@ class _MainScreenState extends State<MainScreen> {
           Navigator.pushNamed(context, AddNotesScreen.id);
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class NoteTile extends StatelessWidget {
+  const NoteTile({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.id,
+  }) : super(key: key);
+
+  final String title;
+  final String subtitle;
+  final String id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        onTap: () {
+          Navigator.pushNamed(context, EditNotesScreen.id,
+              arguments: EditNotesScreenArguments(
+                title: title,
+                description: subtitle,
+                noteId: id,
+              ));
+        },
+        title: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          subtitle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        tileColor: Colors.red[100],
       ),
     );
   }
