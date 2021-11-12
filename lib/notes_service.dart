@@ -25,4 +25,29 @@ class NotesService {
         .whenComplete(() => print('Nota atualizada'))
         .catchError((e) => print(e));
   }
+
+  static Future<void> addNote({
+    required String title,
+    required String description,
+  }) async {
+    DocumentReference note = _notesCollection.doc();
+
+    Map<String, dynamic> data = {
+      'title': title,
+      'description': description,
+    };
+
+    await note
+        .set(data)
+        .whenComplete(() => print('Nota atualizada'))
+        .catchError((e) => print(e));
+  }
+
+  static Future<void> deleteNote({required String id}) async {
+    DocumentReference note = _notesCollection.doc(id);
+    await note
+        .delete()
+        .whenComplete(() => print('Nota removida'))
+        .catchError((e) => print(e));
+  }
 }

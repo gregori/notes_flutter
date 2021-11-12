@@ -106,6 +106,9 @@ class NoteTile extends StatelessWidget {
                 noteId: id,
               ));
         },
+        onLongPress: () {
+          NotesService.deleteNote(id: id);
+        },
         title: Text(
           title,
           maxLines: 1,

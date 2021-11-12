@@ -1,6 +1,7 @@
 // Tela para adicionar nova nota
 import 'package:flutter/material.dart';
 import 'package:notes_flutter/constants.dart';
+import 'package:notes_flutter/notes_service.dart';
 import 'package:notes_flutter/widgets/rounded_button.dart';
 
 import 'main_screen.dart';
@@ -15,6 +16,9 @@ class AddNotesScreen extends StatefulWidget {
 }
 
 class _AddNotesScreenState extends State<AddNotesScreen> {
+  late String title;
+  late String description;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +39,24 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
             TextField(
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Título da nota'),
+              onChanged: (value) {
+                title = value;
+              },
             ),
             const SizedBox(
               height: 8.0,
             ),
-            const Expanded(
+            Expanded(
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Descrição da nota',
                 ),
+                onChanged: (value) {
+                  description = value;
+                },
               ),
             ),
             const SizedBox(
@@ -55,6 +65,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
             RoundedButton(
               title: 'Adicionar Nota',
               onPressed: () {
+                NotesService.addNote(title: title, description: description);
                 Navigator.pushNamed(context, MainScreen.id);
               },
               color: Colors.red,
